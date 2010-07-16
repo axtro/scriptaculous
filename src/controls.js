@@ -211,13 +211,21 @@ Autocompleter.Base = Class.create({
   markPrevious: function() {
     if(this.index > 0) this.index--;
       else this.index = this.entryCount-1;
-    this.getEntry(this.index).scrollIntoView(true);
+    this.scrollIntoViewIfNeeded();
   },
 
   markNext: function() {
     if(this.index < this.entryCount-1) this.index++;
       else this.index = 0;
-    this.getEntry(this.index).scrollIntoView(false);
+    this.scrollIntoViewIfNeeded();
+  },
+
+  scrollIntoViewIfNeeded: function() {
+    var el = this.getEntry(this.index);
+    if((el.cumulativeOffset().top + el.getHeight()) > (document.viewport.getHeight() + document.viewport.getScrollOffsets().top))
+      el.scrollIntoView(false);
+    else if ((el.cumulativeOffset().top) < (document.viewport.getScrollOffsets().top))
+      el.scrollIntoView(true);
   },
 
   getEntry: function(index) {

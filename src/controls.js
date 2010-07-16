@@ -503,10 +503,10 @@ Ajax.InPlaceEditor = Class.create({
       this.options.externalControlOnly = false;
     this._originalBackground = this.element.getStyle('background-color') || 'transparent';
     this.element.title = this.options.clickToEditText;
-    this._boundCancelHandler = this.handleFormCancellation.bind(this);
+    this._boundCancelHandler = this.handleFormCancellation.bindAsEventListener(this);
     this._boundComplete = (this.options.onComplete || Prototype.emptyFunction).bind(this);
     this._boundFailureHandler = this.handleAJAXFailure.bind(this);
-    this._boundSubmitHandler = this.handleFormSubmission.bind(this);
+    this._boundSubmitHandler = this.handleFormSubmission.bindAsEventListener(this);
     this._boundWrapperHandler = this.wrapUp.bind(this);
     this.registerListeners();
   },
